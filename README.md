@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 匠真くん向け 宿題管理アプリ (Homework App)
 
-## Getting Started
+匠真くんが日々の宿題（クエスト）を楽しく管理し、読んだ本を記録するためのゲーミフィケーションアプリです。
 
-First, run the development server:
+## 主な機能
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 🛡️ クエスト管理 (親向け機能)
+*   **クエスト作成**: 子供がやるべきタスク（宿題、お手伝いなど）を作成できます。
+*   **期限設定**: 日付と時間を指定して期限を設定できます。
+*   **編集・削除**: 作成したクエストは後から変更や削除が可能です。
+*   **CSVエクスポート**: クエストの達成状況や読書記録をCSV形式でダウンロードできます。
+*   **Audit Log (変更履歴)**: 誰がいつ何を変更したか、すべての操作履歴がデータベースに保存されます。
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### ⚔️ 冒険ダッシュボード (子供向け機能)
+*   **クエスト確認**: 「現在のクエスト」として、やるべきことがカード形式で表示されます。
+*   **残り時間表示**: 期限までの残り時間がリアルタイムで表示されます（「あと〇時間」など）。
+*   **達成ボタン**: 「できた！」ボタンを押すと、クエストを完了できます。
+*   **図書室へのワープ**: 読書記録画面へ簡単に移動できます。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 📖 自分の図書室 (読書記録)
+*   **本を記録**: 読んだ本のタイトル、著者、感想（星1-5）、参考URLを記録できます。
+*   **URLプレビュー**: 参考URL（Amazonなど）を入力すると、自動的に画像が表示されます。
+*   **マリオ風デザイン**: 子供が楽しめるよう、緑色のカードデザインを採用しています。
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## セットアップ手順 (Windows)
 
-To learn more about Next.js, take a look at the following resources:
+このアプリを動かすためには、以下の手順でセットアップを行ってください。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 1. 必要なツールのインストール
+*   **PostgreSQL 15**: データベースとして使用します。
+    *   インストール時、パスワードを `password` に設定してください。
+*   **Node.js**: アプリの実行環境です。推奨版（LTS）をインストールしてください。
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 2. アプリの起動
+デスクトップにある **`start-app.bat`** をダブルクリックするだけで起動します。
+初回起動時は、自動的にデータベースの準備（マイグレーション）が行われます。
 
-## Deploy on Vercel
+### 3. アカウント情報
+以下の初期アカウントでログインしてください。
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| 役割 | ユーザーID | パスワード | 用途 |
+| :--- | :--- | :--- | :--- |
+| **親 (管理者)** | `parent` | `password123` | クエスト作成、履歴確認、CSV出力 |
+| **子供 (匠真)** | `shoma` | `shoma123` | クエスト実施、読書記録 |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 開発・カスタマイズ情報
+
+### 技術スタック
+*   **Frontend/Backend**: Next.js 15 (App Router)
+*   **Database**: PostgreSQL 15
+*   **ORM**: Prisma
+*   **Styling**: Tailwind CSS
+*   **Language**: TypeScript
+
+### ディレクトリ構成
+*   `src/app`: アプリケーションのページとロジック
+*   `prisma/schema.prisma`: データベースの設計図
+
+### コマンド
+*   **ビルド**: `npm run build`
+*   **開発モード**: `npm run dev`
+*   **DB同期**: `npx prisma db push`
+
+---
+
+## トラブルシューティング
+
+*   **「Database connection error」が出る場合**: PostgreSQLが起動しているか確認してください。
+*   **本の画像が出ない場合**: URLが正しいか確認してください。Amazonなどの一部サイトは表示されないことがありますが、システムの対応で可能な限り表示されるようにしています。
+
+---
+Created by Antigravity for Takuma & Shoma.
