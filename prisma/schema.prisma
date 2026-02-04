@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  PARENT
+  CHILD
+}
+
+enum TaskStatus {
+  TODO
+  DONE
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  name      String
+  role      Role     @default(CHILD)
+  grade     String?  // e.g. "ELEMENTARY_1"
+  createdAt DateTime @default(now())
+
+  tasks Task[]
+  books Book[]
+}
+
+model Task {
+  id          String     @id @default(cuid())
+  title       String
+  description String?
+  status      TaskStatus @default(TODO)
+  dueDate     DateTime?
+  subject     String?    // e.g. "MATH", "JAPANESE"
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  completedAt DateTime?
+}
+
+model Book {
+  id       String   @id @default(cuid())
+  title    String
+  author   String?
+  rating   Int      @default(3) // 1-5 stars
+  readDate DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  url           String?
+  ogTitle       String?
+  ogDescription String?
+  ogImage       String?
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  action    String   // CREATE, UPDATE, DELETE
+  entity    String   // Task, Book
+  entityId  String
+  details   String?  // JSON string or summary
+  userId    String
+  createdAt DateTime @default(now())
+}
