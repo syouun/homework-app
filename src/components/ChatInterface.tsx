@@ -53,7 +53,7 @@ export default function ChatInterface({ taskId, taskTitle, onClose }: ChatInterf
 
             const reader = response.body.getReader();
             const decoder = new TextDecoder();
-            let assistantMessage: Message = { role: "assistant", content: "" };
+            const assistantMessage: Message = { role: "assistant", content: "" };
 
             setMessages((prev) => [...prev, assistantMessage]);
 
@@ -122,8 +122,8 @@ export default function ChatInterface({ taskId, taskTitle, onClose }: ChatInterf
                         )}
                         <div
                             className={`max-w-[80%] p-3 rounded-2xl whitespace-pre-wrap ${msg.role === "user"
-                                    ? "bg-blue-500 text-white rounded-tr-none"
-                                    : "bg-white text-gray-800 border-2 border-sky-100 rounded-tl-none shadow-sm"
+                                ? "bg-blue-500 text-white rounded-tr-none"
+                                : "bg-white text-gray-800 border-2 border-sky-100 rounded-tl-none shadow-sm"
                                 }`}
                         >
                             {msg.content}

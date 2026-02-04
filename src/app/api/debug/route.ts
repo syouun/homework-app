@@ -20,12 +20,12 @@ export async function GET() {
             databaseUrl: maskedUrl,
             nodeEnv: process.env.NODE_ENV,
         });
-    } catch (e: any) {
+    } catch (e: unknown) {
         return NextResponse.json({
             status: "ERROR",
             message: "Database connection failed",
-            error: e.message,
-            stack: e.stack,
+            error: (e as Error).message,
+            stack: (e as Error).stack,
             databaseUrl: process.env.DATABASE_URL ? "SET (Masked on error)" : "NOT_SET",
         }, { status: 500 });
     }

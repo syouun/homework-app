@@ -12,7 +12,7 @@ export async function GET() {
         const parentPassword = await bcrypt.hash("password123", 10);
         const childPassword = await bcrypt.hash("shoma123", 10);
 
-        const parent = await prisma.user.upsert({
+        await prisma.user.upsert({
             where: { username: "parent" },
             update: {
                 password: parentPassword,
@@ -25,7 +25,7 @@ export async function GET() {
             },
         });
 
-        const child = await prisma.user.upsert({
+        await prisma.user.upsert({
             where: { username: "shoma" },
             update: {},
             create: {

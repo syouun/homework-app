@@ -2,7 +2,7 @@ import { getTasks, createTask, deleteTask, toggleTaskStatus } from "../actions";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { Trash2, CheckCircle, Edit, Calendar } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import Link from "next/link";
 
 import LogoutButton from "@/components/LogoutButton";

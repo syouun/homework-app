@@ -104,12 +104,12 @@ Interaction:
       },
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Chat API Error:', error);
     return NextResponse.json({
       error: 'Internal Server Error',
-      details: error.message,
-      name: error.name
+      details: (error as Error).message,
+      name: (error as Error).name
     }, { status: 500 });
   }
 }

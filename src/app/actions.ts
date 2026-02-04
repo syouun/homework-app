@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
-async function logAudit(action: string, entity: string, entityId: string, details: any) {
+async function logAudit(action: string, entity: string, entityId: string, details: unknown) {
   const session = await getServerSession(authOptions);
   if (!session) return;
 
@@ -64,7 +64,6 @@ export async function createTask(formData: FormData) {
 
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
-  const subject = formData.get("subject") as string;
 
   // Handle Split Date/Time
   const dateStr = formData.get("dueDate_date") as string;
@@ -115,7 +114,6 @@ export async function updateTask(id: string, formData: FormData) {
 
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
-  const subject = formData.get("subject") as string;
 
   // Handle Split Date/Time
   const dateStr = formData.get("dueDate_date") as string;
