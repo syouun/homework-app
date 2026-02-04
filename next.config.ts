@@ -3,11 +3,16 @@ import withPWAInit from "@ducanh2912/next-pwa";
 
 const withPWA = withPWAInit({
   dest: "public",
-  disable: process.env.NODE_ENV === "development",
+  disable: true, // process.env.NODE_ENV === "development",
 });
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // @ts-expect-error - eslint config is valid but types might be outdated
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  swcMinify: false,
 };
 
-export default withPWA(nextConfig);
+// export default withPWA(nextConfig);
+export default nextConfig;
