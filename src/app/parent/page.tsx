@@ -2,7 +2,7 @@ import { getTasks, createTask, deleteTask, toggleTaskStatus } from "../actions";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { Trash2 } from "lucide-react";
+import { Trash2, Settings } from "lucide-react";
 import Link from "next/link";
 
 import LogoutButton from "@/components/LogoutButton";
@@ -28,10 +28,17 @@ export default async function ParentDashboard() {
                         <div className="text-sm font-bold">ログイン中: {session.user.username}</div>
                     </div>
                     <div className="flex gap-2">
+                        <Link
+                            href="/parent/settings"
+                            className="bg-gray-100 text-gray-700 p-2 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center border-2 border-black"
+                            title="設定"
+                        >
+                            <Settings className="w-6 h-6" />
+                        </Link>
                         <a
                             href="/api/export-csv"
                             download="tasks.csv"
-                            className="bg-green-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-600 transition-colors flex items-center"
+                            className="bg-green-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-600 transition-colors flex items-center border-2 border-black"
                         >
                             CSV出力
                         </a>

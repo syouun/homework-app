@@ -49,19 +49,29 @@ export async function POST(req: Request) {
       toneInstruction = 'Tone: Logical, concise, supportive. Use "Desu/Masu" style.';
     }
 
+    // Determine Goal and Constraint based on history length
+    const isFirstTime = history.length === 0;
+    const goalInstruction = isFirstTime
+      ? "Help the child understand the task or solve the problem WITHOUT giving the direct answer."
+      : "Help the child solve the problem. Since this is a follow-up question, you can provide the direct answer or a clear explanation of how to solve it, while still being educational.";
+
+    const constraintInstruction = isFirstTime
+      ? "NEVER provide the final answer immediately. Guide them step-by-step with hints."
+      : "You can provide the answer or a step-by-step solution now. Make sure the explanation is easy to understand.";
+
     const systemPrompt = `
 You are a friendly and helpful tutor for a child.
 The child's grade is: ${grade}.
 The subject is: ${subjectContext}.
 The current task is: "${title}" - ${description || 'No description'}.
 
-Your Goal: Help the child understand the task or solve the problem WITHOUT giving the direct answer.
-Constraint: NEVER provide the final answer immediately. Guide them step-by-step.
+Your Goal: ${goalInstruction}
+Constraint: ${constraintInstruction}
 ${toneInstruction}
 
 Interaction:
 - Praise them for asking.
-- Ask leading questions.
+- Ask leading questions if it's the first time.
 - If they are stuck on calculation, suggest breaking it down.
 `;
 
